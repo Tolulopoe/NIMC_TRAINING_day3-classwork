@@ -26,8 +26,8 @@ services:
     depends_on:
       - db
 #Frontend Section
-  Frontend:
-    build: ./Frontend
+  frontend:
+    build: ./frontend
     ports:
       - "2001:2000"
     environment:
