@@ -1,0 +1,36 @@
+#Define each services
+services:
+#DB Section
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: nimcuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: nimcdb
+    volumes:
+      - ./database/db-init.sql:/docker-entrypoint-initdb.d/init.sql
+    #expose the db file
+    ports:
+    #the first port (5432) is for the host while the second is the container port
+      - "5432:5432"
+#Backend section
+  backend:
+    build: ./backend
+    environment:
+      POSTGRES_USER: nimcuser
+      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: nimcdb
+      POSTGRESS_HOST: db
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+#Frontend Section
+  Frontend:
+    build: ./Frontend
+    ports:
+      - "2001:2000"
+    environment:
+      REACT_APP_API_URL: http://backend:5000
+    depends_on:
+      - backend
