@@ -20,7 +20,7 @@ services:
       POSTGRES_USER: nimcuser
       POSTGRES_PASSWORD: mypassword
       POSTGRES_DB: nimcdb
-      POSTGRESS_HOST: db
+      POSTGRES_HOST: db
     ports:
       - "5000:5000"
     depends_on:
